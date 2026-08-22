@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bueno Burgers | Handgemachte Burger in Frankfurt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E74C3C',
+                        dark: '#2D1B00',
+                        accent: '#5F704B',
+                        light: '#FBF9F6',
+                        border: '#E8E3DB'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Styles */
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #2D1B00; }
+        .hero-bg { background-color: #FBF9F6; }
+        .glass-nav { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white">
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[100] p-4 sm:p-6 border-t shadow-2xl bg-light border-primary hidden transform transition-transform duration-300 translate-y-0">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex gap-3 items-start">
+                <svg class="text-primary mt-1 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 12.5v.01"/><path d="M12 16v.01"/><path d="M11 12v.01"/><path d="M15 9v.01"/></svg>
+                <div class="text-sm">
+                    <p class="font-bold mb-1 text-dark">Wir nutzen Cookies</p>
+                    <p class="text-accent">Nur essenzielle Cookies für die Website-Funktion. Mehr in der <a href="#datenschutz" class="underline text-primary">Datenschutzerklärung</a>.</p>
+                </div>
+            </div>
+            <div class="flex gap-3 sm:flex-shrink-0">
+                <button onclick="rejectCookies()" class="px-4 py-2 rounded text-sm font-medium border border-primary text-primary hover:bg-primary/5 transition">Ablehnen</button>
+                <button onclick="acceptCookies()" class="px-4 py-2 rounded text-sm font-medium bg-primary text-white hover:bg-red-600 transition">Alle akzeptieren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-nav border-b border-border">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="12" width="32" height="4" rx="1" fill="#2D1B00" />
+                    <rect x="4" y="16" width="32" height="2" fill="#E74C3C" />
+                    <rect x="4" y="18" width="32" height="6" rx="1" fill="#F9E79F" />
+                    <rect x="4" y="24" width="32" height="2" fill="#E74C3C" />
+                    <rect x="4" y="26" width="32" height="4" rx="1" fill="#2D1B00" />
+                    <circle cx="12" cy="20" r="1.5" fill="#27AE60" opacity="0.7" />
+                    <circle cx="20" cy="21" r="1.5" fill="#27AE60" opacity="0.7" />
+                    <circle cx="28" cy="20" r="1.5" fill="#27AE60" opacity="0.7" />
+                </svg>
+                <div class="text-sm font-bold text-dark leading-tight">
+                    BUENO<br><span class="text-[0.65em] tracking-widest block">BURGERS</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex gap-2">
+                <a href="#speisekarte" class="px-4 py-2 text-sm font-medium transition rounded hover:bg-gray-100 text-dark">Speisekarte</a>
+                <a href="#uber-uns" class="px-4 py-2 text-sm font-medium transition rounded hover:bg-gray-100 text-dark">Über uns</a>
+                <a href="#galerie" class="px-4 py-2 text-sm font-medium transition rounded hover:bg-gray-100 text-dark">Galerie</a>
+                <a href="#kontakt" class="px-4 py-2 text-sm font-medium transition rounded hover:bg-gray-100 text-dark">Kontakt</a>
+            </div>
+
+            <a href="#kontakt" class="hidden md:block px-6 py-2 rounded text-sm font-medium text-white bg-primary hover:bg-red-600 shadow-lg shadow-red-500/30 transition transform hover:-translate-y-0.5">Reservieren</a>
+
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMenu()" class="md:hidden p-2 text-dark focus:outline-none">
+                <svg id="menu-icon" class="block" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <svg id="close-icon" class="hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-light">
+            <div class="px-4 py-4 space-y-2">
+                <a href="#speisekarte" onclick="toggleMenu()" class="block w-full text-left px-4 py-2 rounded text-sm font-medium transition hover:bg-white text-dark">Speisekarte</a>
+                <a href="#uber-uns" onclick="toggleMenu()" class="block w-full text-left px-4 py-2 rounded text-sm font-medium transition hover:bg-white text-dark">Über uns</a>
+                <a href="#galerie" onclick="toggleMenu()" class="block w-full text-left px-4 py-2 rounded text-sm font-medium transition hover:bg-white text-dark">Galerie</a>
+                <a href="#kontakt" onclick="toggleMenu()" class="block w-full text-left px-4 py-2 rounded text-sm font-medium transition hover:bg-white text-dark">Kontakt</a>
+                <a href="#kontakt" onclick="toggleMenu()" class="block text-center w-full mt-4 py-3 rounded text-sm font-medium text-white bg-primary shadow-md">Tisch reservieren</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-light overflow-hidden" id="hero">
+        <div class="max-w-6xl mx-auto px-4 py-16 md:py-24 lg:py-32 flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/2 text-center md:text-left z-10">
+                <div class="mb-6 inline-block md:hidden">
+                    <svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="12" width="32" height="4" rx="1" fill="#2D1B00" />
+                        <rect x="4" y="16" width="32" height="2" fill="#E74C3C" />
+                        <rect x="4" y="18" width="32" height="6" rx="1" fill="#F9E79F" />
+                        <rect x="4" y="24" width="32" height="2" fill="#E74C3C" />
+                        <rect x="4" y="26" width="32" height="4" rx="1" fill="#2D1B00" />
+                    </svg>
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-extrabold mb-6 text-dark tracking-tight leading-[1.1]">
+                    Handgemachte <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#F39C12]">Burger.</span><br>Frische Zutaten.
+                </h1>
+                <p class="text-lg md:text-xl mb-10 text-accent max-w-xl mx-auto md:mx-0 leading-relaxed">
+                    Wir grillen jeden Burger nach Bestellung. Hochwertige Patties, frisches Gemüse, hausgemachte Saucen. In Frankfurt.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#speisekarte" class="px-8 py-3.5 rounded-lg text-base font-semibold text-white bg-primary hover:bg-red-600 shadow-xl shadow-red-500/30 transition transform hover:-translate-y-1 text-center">
+                        Speisekarte ansehen
+                    </a>
+                    <a href="#kontakt" class="px-8 py-3.5 rounded-lg text-base font-semibold border-2 border-primary text-primary hover:bg-primary/5 transition text-center">
+                        Tisch reservieren
+                    </a>
+                </div>
+            </div>
+            
+            <div class="w-full md:w-1/2 relative z-10">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500">
+                    <img src="image_2.png" alt="Bueno Classic Burger" class="w-full h-auto object-cover object-center aspect-[4/3]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4 text-white">
+                        <span class="bg-primary px-3 py-1 text-xs font-bold rounded-full uppercase tracking-wider mb-2 inline-block">Bestseller</span>
+                        <h3 class="text-2xl font-bold">Der Bueno Classic</h3>
+                    </div>
+                </div>
+                <!-- Decorative element -->
+                <div class="absolute -z-10 -bottom-10 -right-10 w-64 h-64 bg-[#F39C12]/20 rounded-full blur-3xl"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-20 md:py-32 bg-white" id="uber-uns">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="order-2 md:order-1 relative">
+                    <img src="image.png" alt="Restaurant Interior" class="rounded-xl shadow-lg w-full h-auto object-cover aspect-square md:aspect-[4/5]">
+                    <div class="absolute -bottom-8 -right-8 w-48 bg-white p-4 rounded-xl shadow-xl border border-gray-100 hidden md:block">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-xl">
+                                ★
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-dark">Top bewertet</p>
+                                <p class="text-xs text-accent">in Frankfurt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-1 md:order-2">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8 text-dark tracking-tight">
+                        Burger, die man <span class="relative">schmeckt.<svg class="absolute w-full h-3 -bottom-1 left-0 text-primary" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="none"/></svg></span>
+                    </h2>
+                    <div class="space-y-6 text-lg text-dark/80 leading-relaxed">
+                        <p>
+                            Wir hatten die Idee im Sommer 2019. Marcus und Tom wollten einfach nicht verstehen, warum gute Burger in Frankfurt so schwer zu finden sind. Also haben wir was dagegen getan.
+                        </p>
+                        <p>
+                            Heute nutzen wir nur hochwertige Patties von lokalen Partnern, schneiden unser Gemüse täglich frisch und machen die Saucen selbst. Jeder Burger wird einzeln gegrillt – nach deiner Bestellung.
+                        </p>
+                        <p class="font-medium text-primary">
+                            Das ist mehr Aufwand. Aber man schmeckt den Unterschied.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-10 grid grid-cols-2 gap-6 pt-10 border-t border-border">
+                        <div>
+                            <div class="text-4xl font-extrabold text-primary mb-2">100%</div>
+                            <p class="font-semibold text-dark">Frische Zutaten</p>
+                            <p class="text-sm text-accent">bei jedem Burger</p>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-extrabold text-[#F39C12] mb-2">Live</div>
+                            <p class="font-semibold text-dark">Gegrillte Patties</p>
+                            <p class="text-sm text-accent">nach deiner Bestellung</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="py-20 md:py-32 bg-light" id="speisekarte">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-dark">Unsere Speisekarte</h2>
+                <p class="text-accent text-lg">Qualität, die man bei jedem Bissen spürt.</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap gap-3 mb-12 justify-center bg-white p-2 rounded-xl shadow-sm border border-gray-100 w-fit mx-auto">
+                <button id="tab-burgers" onclick="showMenuTab('burgers')" class="tab-btn bg-primary text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition shadow-sm">Burger</button>
+                <button id="tab-chicken" onclick="showMenuTab('chicken')" class="tab-btn text-dark bg-transparent hover:bg-gray-50 px-6 py-2.5 rounded-lg text-sm font-semibold transition">Hähnchen</button>
+                <button id="tab-veggie" onclick="showMenuTab('veggie')" class="tab-btn text-dark bg-transparent hover:bg-gray-50 px-6 py-2.5 rounded-lg text-sm font-semibold transition">Vegan</button>
+                <button id="tab-sides" onclick="showMenuTab('sides')" class="tab-btn text-dark bg-transparent hover:bg-gray-50 px-6 py-2.5 rounded-lg text-sm font-semibold transition">Sides</button>
+                <button id="tab-drinks" onclick="showMenuTab('drinks')" class="tab-btn text-dark bg-transparent hover:bg-gray-50 px-6 py-2.5 rounded-lg text-sm font-semibold transition">Getränke</button>
+            </div>
+
+            <!-- Menu Content -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border border-gray-100">
+                <!-- Burgers -->
+                <div id="menu-burgers" class="menu-section space-y-8 animate-fade-in">
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Bueno Classic <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded ml-2">Beliebt</span></h3>
+                            <p class="text-accent leading-relaxed">Doppel-Patty, Cheddar, karamellisierte Zwiebeln, Pickles, hausgemachte Sauce</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">12,50 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Bueno BBQ</h3>
+                            <p class="text-accent leading-relaxed">Doppel-Patty, Cheddar, Bacon, BBQ-Sauce, Röstzwiebeln</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">13,50 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Bueno Deluxe</h3>
+                            <p class="text-accent leading-relaxed">Triple-Patty, doppelter Cheddar, Bacon, Spiegelei, Bueno Sauce</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">15,00 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Pilz-Burger</h3>
+                            <p class="text-accent leading-relaxed">Doppel-Patty, Cheddar, sautierte Champignons, Trüffel-Mayo</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">13,80 €</span>
+                    </div>
+                </div>
+
+                <!-- Chicken -->
+                <div id="menu-chicken" class="menu-section hidden space-y-8 animate-fade-in">
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Knusprige Hähnchenbrust</h3>
+                            <p class="text-accent leading-relaxed">Knusprig frittiert, Cheddar, Tomate, Salat, Chili-Mayo</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">11,50 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Gegrilltes Hähnchen</h3>
+                            <p class="text-accent leading-relaxed">Zarte Hähnchenbrust, Avocado, Bacon, Tomate, Limetten-Aioli</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">12,50 €</span>
+                    </div>
+                </div>
+
+                <!-- Veggie -->
+                <div id="menu-veggie" class="menu-section hidden space-y-8 animate-fade-in">
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Green Bueno</h3>
+                            <p class="text-accent leading-relaxed">Veganes Patty, frischer Salat, Tomate, Pickles, vegane Sauce</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">10,50 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Veggie-Traum</h3>
+                            <p class="text-accent leading-relaxed">Veganes Patty, Avocado, Pilze, Rucola, Senf-Aioli</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">11,50 €</span>
+                    </div>
+                </div>
+
+                <!-- Sides -->
+                <div id="menu-sides" class="menu-section hidden space-y-8 animate-fade-in">
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Loaded Fries</h3>
+                            <p class="text-accent leading-relaxed">Frische Pommes mit Cheddar-Sauce, Crispy Onions, hausgemachte Sauce</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">6,50 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Classic Fries</h3>
+                            <p class="text-accent leading-relaxed">Goldbraune Pommes mit Bueno-Sauce</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">3,50 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Zwiebelringe</h3>
+                            <p class="text-accent leading-relaxed">Frittierte Zwiebelringe mit Chili-Mayo</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">4,50 €</span>
+                    </div>
+                </div>
+
+                <!-- Drinks -->
+                <div id="menu-drinks" class="menu-section hidden space-y-8 animate-fade-in">
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Hausgemachte Limonade</h3>
+                            <p class="text-accent leading-relaxed">Frisch gepresst – Zitrone oder Erdbeere</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">3,50 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4 border-b border-gray-100 pb-6">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Milkshake</h3>
+                            <p class="text-accent leading-relaxed">Vanille, Schokolade oder Erdbeere – 500ml, cremig und kalt</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">5,50 €</span>
+                    </div>
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <h3 class="font-bold text-xl text-dark mb-1">Softdrinks</h3>
+                            <p class="text-accent leading-relaxed">Verschiedene Premium-Getränke</p>
+                        </div>
+                        <span class="font-bold text-xl text-primary whitespace-nowrap">ab 2,50 €</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#kontakt" class="inline-block px-10 py-4 rounded-lg text-lg font-bold text-white bg-primary hover:bg-red-600 shadow-xl shadow-red-500/20 transition transform hover:-translate-y-1">
+                    Tisch reservieren
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 md:py-32 bg-white" id="galerie">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center text-dark">Galerie</h2>
+
+            <!-- Gallery Grid Setup -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Img 1 -->
+                <div onclick="openModal('image_2.png', 'Bueno Classic', 'Der Klassiker – wie Burger sein sollten')" class="group cursor-pointer rounded-xl overflow-hidden bg-[#F6F1E8] h-72 relative shadow-md">
+                    <img src="image_2.png" alt="Bueno Classic" class="w-full h-full object-cover transition duration-700 transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                        <p class="font-bold text-xl text-white mb-1">Bueno Classic</p>
+                        <p class="text-sm text-gray-200">Der Klassiker – wie Burger sein sollten</p>
+                    </div>
+                </div>
+                <!-- Img 2 -->
+                <div onclick="openModal('image.png', 'Innen gemütlich', 'Entspannte Atmosphäre zum Genießen')" class="group cursor-pointer rounded-xl overflow-hidden bg-[#F6F1E8] h-72 relative shadow-md md:col-span-2 lg:col-span-1">
+                    <img src="image.png" alt="Innen gemütlich" class="w-full h-full object-cover transition duration-700 transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                        <p class="font-bold text-xl text-white mb-1">Innen gemütlich</p>
+                        <p class="text-sm text-gray-200">Entspannte Atmosphäre zum Genießen</p>
+                    </div>
+                </div>
+                <!-- Img 3 -->
+                <div onclick="openModal('image_5.png', 'Veggie-Traum', 'Frisch, rustikal und 100% fleischfrei')" class="group cursor-pointer rounded-xl overflow-hidden bg-[#F6F1E8] h-72 relative shadow-md">
+                    <img src="image_5.png" alt="Veggie-Traum" class="w-full h-full object-cover transition duration-700 transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                        <p class="font-bold text-xl text-white mb-1">Veggie-Traum</p>
+                        <p class="text-sm text-gray-200">Frisch, rustikal und 100% fleischfrei</p>
+                    </div>
+                </div>
+                <!-- Img 4 -->
+                <div onclick="openModal('image_4.png', 'Unsere Gäste', 'Der beste Ort, um mit Freunden zu essen')" class="group cursor-pointer rounded-xl overflow-hidden bg-[#F6F1E8] h-72 relative shadow-md lg:col-span-2">
+                    <img src="image_4.png" alt="Unsere Gäste" class="w-full h-full object-cover transition duration-700 transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                        <p class="font-bold text-xl text-white mb-1">Unsere Gäste</p>
+                        <p class="text-sm text-gray-200">Der beste Ort, um mit Freunden zu essen</p>
+                    </div>
+                </div>
+                <!-- Img 5 -->
+                <div onclick="openModal('image_3.png', 'Feine Details', 'Ein Hochgenuss für alle Sinne')" class="group cursor-pointer rounded-xl overflow-hidden bg-[#F6F1E8] h-72 relative shadow-md">
+                    <img src="image_3.png" alt="Feine Details" class="w-full h-full object-cover transition duration-700 transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                        <p class="font-bold text-xl text-white mb-1">Feine Details</p>
+                        <p class="text-sm text-gray-200">Ein Hochgenuss für alle Sinne</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="gallery-modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-[100] backdrop-blur-sm" onclick="closeModal(event)">
+        <div class="bg-white rounded-2xl overflow-hidden max-w-4xl w-full relative shadow-2xl" onclick="event.stopPropagation()">
+            <button onclick="closeModal(event)" class="absolute top-4 right-4 bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition z-10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <img id="modal-img" src="" alt="" class="w-full h-[50vh] md:h-[70vh] object-cover">
+            <div class="p-6 md:p-8">
+                <h3 id="modal-title" class="font-bold text-2xl mb-2 text-dark"></h3>
+                <p id="modal-desc" class="text-accent text-lg"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <section class="py-20 md:py-32 bg-light relative" id="bewertungen">
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-dark">Das sagen unsere Gäste</h2>
+                <div class="flex justify-center gap-1 text-[#F39C12] mb-4">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="p-8 rounded-2xl bg-white shadow-xl border border-gray-50 relative">
+                    <div class="absolute -top-6 left-8 text-6xl text-primary/20 font-serif">"</div>
+                    <p class="mb-6 text-lg italic text-dark/80 relative z-10">
+                        Die besten Burger, die ich in Frankfurt gegessen habe. Frische ist king – und das merkt man hier.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500">T</div>
+                        <div>
+                            <p class="font-bold text-primary">Thomas</p>
+                            <p class="text-xs text-gray-400">Demo-Bewertung</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="p-8 rounded-2xl bg-white shadow-xl border border-gray-50 relative">
+                    <div class="absolute -top-6 left-8 text-6xl text-primary/20 font-serif">"</div>
+                    <p class="mb-6 text-lg italic text-dark/80 relative z-10">
+                        Endlich ein echtes Restaurant und keine Kette. Die Jungs machen das mit Liebe. Komme jede Woche.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500">S</div>
+                        <div>
+                            <p class="font-bold text-primary">Sophia</p>
+                            <p class="text-xs text-gray-400">Demo-Bewertung</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="p-8 rounded-2xl bg-white shadow-xl border border-gray-50 relative">
+                    <div class="absolute -top-6 left-8 text-6xl text-primary/20 font-serif">"</div>
+                    <p class="mb-6 text-lg italic text-dark/80 relative z-10">
+                        Superlecker und super sympathisch. Genau das, was Frankfurt brauchte. Absolute Empfehlung!
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500">M</div>
+                        <div>
+                            <p class="font-bold text-primary">Marco</p>
+                            <p class="text-xs text-gray-400">Demo-Bewertung</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Hours -->
+    <section class="py-20 md:py-32 bg-white" id="kontakt">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center text-dark">Besucht uns in Frankfurt</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16 items-start">
+                <!-- Contact Info -->
+                <div class="space-y-10">
+                    <div class="flex gap-5 items-start">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl mb-2 text-dark">Adresse</h3>
+                            <p class="text-accent text-lg mb-2">Mainzer Landstraße 72<br>60329 Frankfurt am Main</p>
+                            <a href="https://www.google.com/maps/search/Mainzer+Landstra%C3%9Fe+72,+60329+Frankfurt+am+Main" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold inline-flex items-center gap-1 hover:opacity-80 transition">
+                                Route anzeigen &rarr;
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-5 items-start">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl mb-2 text-dark">Telefon & E-Mail</h3>
+                            <a href="tel:+496912345678" class="block text-accent text-lg hover:text-primary transition mb-1">+49 69 12345678</a>
+                            <a href="mailto:hallo@bueno-burgers.de" class="block text-accent text-lg hover:text-primary transition">hallo@bueno-burgers.de</a>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-5 items-start">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <div class="w-full">
+                            <h3 class="font-bold text-xl mb-4 text-dark">Öffnungszeiten</h3>
+                            <div class="space-y-2 w-full max-w-xs">
+                                <div class="flex justify-between border-b border-gray-100 pb-2"><span class="text-dark font-medium">Mo–Mi</span><span class="text-accent">11:30–22:00</span></div>
+                                <div class="flex justify-between border-b border-gray-100 pb-2"><span class="text-dark font-medium">Do</span><span class="text-accent">11:30–23:00</span></div>
+                                <div class="flex justify-between border-b border-gray-100 pb-2"><span class="text-dark font-medium">Fr</span><span class="text-accent">11:30–00:00</span></div>
+                                <div class="flex justify-between border-b border-gray-100 pb-2"><span class="text-dark font-medium">Sa</span><span class="text-accent">12:00–00:00</span></div>
+                                <div class="flex justify-between"><span class="text-dark font-medium">So</span><span class="text-accent">12:00–21:00</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps -->
+                <div class="rounded-2xl overflow-hidden shadow-2xl h-[450px] border border-gray-100">
+                    <iframe
+                        width="100%"
+                        height="100%"
+                        style="border: 0"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2557.2449305503577!2d8.667!3d50.104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bd0c2c2c2c2c2d%3A0x2c2c2c2c2c2c2c2c!2sMainzer%20Landstra%C3%9Fe%2072%2C%2060329%20Frankfurt%20am%20Main!5e0!3m2!1sde!2sde!4v1234567890"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                </div>
+            </div>
+
+            <!-- Reservation CTA -->
+            <div class="p-10 md:p-14 rounded-3xl text-center bg-light border-2 border-primary relative overflow-hidden shadow-2xl">
+                <!-- BG Accents -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-[#F39C12]/5 rounded-full blur-2xl"></div>
+                
+                <h3 class="text-3xl md:text-4xl font-extrabold mb-4 text-dark relative z-10">Tisch reservieren</h3>
+                <p class="mb-8 max-w-2xl mx-auto text-accent text-lg relative z-10">
+                    Planst du ein Abendessen mit Freunden oder ein Date? Ruf uns einfach an oder schreib uns eine E-Mail. Wir bereiten alles für euch vor.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+                    <a href="tel:+496912345678" class="px-8 py-4 rounded-lg text-lg font-bold text-white bg-primary hover:bg-red-600 shadow-xl shadow-red-500/30 transition transform hover:-translate-y-1">
+                        Jetzt anrufen
+                    </a>
+                    <a href="mailto:hallo@bueno-burgers.de?subject=Tischreservierung" class="px-8 py-4 rounded-lg text-lg font-bold bg-white border-2 border-primary text-primary hover:bg-gray-50 transition transform hover:-translate-y-1">
+                        E-Mail schreiben
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-16 md:py-20 border-t-4 border-primary">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="12" width="32" height="4" rx="1" fill="#FFFFFF" />
+                            <rect x="4" y="16" width="32" height="2" fill="#E74C3C" />
+                            <rect x="4" y="18" width="32" height="6" rx="1" fill="#F9E79F" />
+                            <rect x="4" y="24" width="32" height="2" fill="#E74C3C" />
+                            <rect x="4" y="26" width="32" height="4" rx="1" fill="#FFFFFF" />
+                        </svg>
+                        <div class="text-xl font-bold leading-tight">
+                            BUENO<br><span class="text-[0.65em] tracking-widest block text-gray-400">BURGERS</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-sm mb-6">
+                        Handgemachte Burger. Frische Zutaten. Dein neuer Lieblings-Burgerladen im Herzen von Frankfurt.
+                    </p>
+                    <a href="https://instagram.com/bueno.burgers.frankfurt" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-white hover:text-primary transition font-medium">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        Folge uns auf Instagram
+                    </a>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6 border-b border-gray-800 pb-2 inline-block">Kontakt</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="tel:+496912345678" class="hover:text-white transition">+49 69 12345678</a></li>
+                        <li><a href="mailto:hallo@bueno-burgers.de" class="hover:text-white transition">hallo@bueno-burgers.de</a></li>
+                        <li class="pt-2">Mainzer Landstraße 72<br>60329 Frankfurt am Main</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6 border-b border-gray-800 pb-2 inline-block">Rechtliches</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="#impressum" class="hover:text-white transition">Impressum</a></li>
+                        <li><a href="#datenschutz" class="hover:text-white transition">Datenschutz</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs">
+                <p>&copy; 2024 Bueno Burgers GmbH. Alle Rechte vorbehalten.</p>
+                <p>Website-Demo generiert für Testzwecke.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Impressum & Datenschutz Modals/Sections (Kept as simple sections at bottom) -->
+    <div class="bg-gray-50 border-t border-gray-200" id="impressum">
+        <div class="max-w-4xl mx-auto px-4 py-12 md:py-16">
+            <h3 class="text-3xl font-bold mb-8 text-dark">Impressum</h3>
+            <div class="text-sm space-y-4 text-gray-600 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <p>
+                    <strong class="text-dark font-bold text-base">Bueno Burgers GmbH</strong><br>
+                    Mainzer Landstraße 72<br>
+                    60329 Frankfurt am Main
+                </p>
+                <p>
+                    <strong class="text-dark">Telefon:</strong> +49 69 12345678<br>
+                    <strong class="text-dark">E-Mail:</strong> hallo@bueno-burgers.de
+                </p>
+                <p>
+                    <strong class="text-dark">Geschäftsführer:</strong> [FIKTIVER DEMO-NAME]
+                </p>
+                <p>
+                    <strong class="text-dark">Handelsregister:</strong> [DEMO-ANGABE]<br>
+                    <strong class="text-dark">Registergericht:</strong> [DEMO-ANGABE]
+                </p>
+                <div class="p-4 rounded-lg mt-8 bg-red-50 border-l-4 border-primary">
+                    <p class="text-sm font-bold mb-1 text-primary flex items-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        Demo-Website
+                    </p>
+                    <p class="text-xs text-red-900">
+                        Dies ist eine Demo-Website mit fiktiven Testdaten. Für eine echte Website müssen diese Angaben anhand der tatsächlichen Unternehmensdaten geprüft und angepasst werden.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-gray-100 border-t border-gray-200" id="datenschutz">
+        <div class="max-w-4xl mx-auto px-4 py-12 md:py-16">
+            <h3 class="text-3xl font-bold mb-8 text-dark">Datenschutzerklärung</h3>
+            <div class="text-sm space-y-6 text-gray-600 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <div>
+                    <strong class="text-dark text-base block mb-2">Allgemeines</strong>
+                    <p>Diese Website wird betrieben von Bueno Burgers GmbH. Der Schutz eurer Daten ist uns wichtig.</p>
+                </div>
+                
+                <div>
+                    <strong class="text-dark text-base block mb-2">Welche Daten erfassen wir?</strong>
+                    <ul class="list-disc list-inside space-y-1 ml-2 text-gray-500">
+                        <li>Technische Daten: IP-Adresse, Browser-Typ, Besuchte Seiten, Referrer (automatisch erfasst)</li>
+                        <li>Kontaktformulare: Name, E-Mail, Telefon, Nachricht (wenn du uns kontaktierst)</li>
+                        <li>Cookies: Nur essenzielle Session-Cookies (kein Tracking)</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <strong class="text-dark text-base block mb-2">Google Maps</strong>
+                    <p>Wir verwenden Google Maps zur Standortanzeige. Google erhält dabei deine IP-Adresse. Siehe <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Google Datenschutz</a>.</p>
+                </div>
+
+                <div>
+                    <strong class="text-dark text-base block mb-2">Deine Rechte</strong>
+                    <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung oder Widerspruch deiner Daten.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Cookie Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const consent = localStorage.getItem('buenoCookieConsent');
+            if (!consent) {
+                const banner = document.getElementById('cookie-banner');
+                banner.classList.remove('hidden');
+                // slight delay for animation
+                setTimeout(() => banner.classList.remove('translate-y-full'), 100);
+            }
+        });
+
+        function acceptCookies() {
+            localStorage.setItem('buenoCookieConsent', 'true');
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
+
+        function rejectCookies() {
+            localStorage.setItem('buenoCookieConsent', 'false');
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
+
+        // Mobile Menu Logic
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            menu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('block');
+        }
+
+        // Menu Tabs Logic
+        function showMenuTab(tabId) {
+            // Hide all sections
+            document.querySelectorAll('.menu-section').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById('menu-' + tabId).classList.remove('hidden');
+            
+            // Update buttons styling
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-primary', 'text-white', 'shadow-sm');
+                el.classList.add('text-dark', 'bg-transparent');
+            });
+            
+            // Active button styling
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.add('bg-primary', 'text-white', 'shadow-sm');
+            activeBtn.classList.remove('text-dark', 'bg-transparent');
+        }
+
+        // Gallery Modal Logic
+        function openModal(imgSrc, title, desc) {
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            const modal = document.getElementById('gallery-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeModal(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            const modal = document.getElementById('gallery-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+    </script>
+</body>
+</html>
